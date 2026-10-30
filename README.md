@@ -22,6 +22,12 @@ function myService:addPoints(player: Player, points: number)
 	...
 end
 
+function myService:stopClientAccess()
+	self.networker:removeClientAccess(self, {
+		self.printTest,
+	})
+end
+
 return myService
 ```
 

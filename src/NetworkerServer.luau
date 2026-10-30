@@ -145,6 +145,22 @@ function NetworkerServer.addClientAccess(self: NetworkerServer, module: any, met
 end
 
 --[=[
+	Removes client access to method(s) previously registered for the module
+	@param module any -- The class or service the client communicates with
+	@param methods ClientAccess -- The methods to remove from client access
+	@return ()
+]=]
+function NetworkerServer.removeClientAccess(self: NetworkerServer, module: any, methods: { any }): ()
+	for funcName, access in self._accessLookup do
+		if access.module ~= module or not table.find(methods, access.method) then
+			continue
+		end
+
+		self._accessLookup[funcName] = nil
+	end
+end
+
+--[=[
 	Adds a player to the list of recipients  
 	@param player Player -- The player to add to the list of recipients  
 	@return ()  
